@@ -1,0 +1,39 @@
+document.getElementById('messageInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // thanks to putu
+        async function scrapeLuminai(content, user, prompt) {
+            const url = 'https://luminai.my.id';
+            const requestData = {
+                content: content,
+                user: user,
+                prompt: prompt
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                const data = await response.json();
+                
+                if (data && data.result) {
+                    return data.result;
+                } else {
+                    throw new Error('Respon tidak valid dari luminai.my.id');
+                }
+            } catch (error) {
+                console.error('Error scraping luminai:', error.message);
+                throw error;
+            }
+        }
+    </script>
+</body>
+</html>
